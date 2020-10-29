@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  101app:
+    image: 101app
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+        - 3000:3000
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      NODE_ENV: production
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+      MYSQL_DB: todos
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - todo-mysql-data:/var/lib/mysql
+    environment: 
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: todos      
+volumes:
+  todo-mysql-data:
